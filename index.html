@@ -5,6 +5,7 @@
 <head>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="shortcut icon" type="image/png" href="img/SALUTBG.png"/>
 
     <title>Watching on Map</title>
 </head>
@@ -66,14 +67,22 @@
                     center: location,
                     mapTypeId: google.maps.MapTypeId.ROADMAP
                 };
-                localStorage.setItem("latitude", position.coords.latitude)
-                localStorage.setItem("longitude", position.coords.longitude)
+                var lati = localStorage.dernierNombre;
+                lati = parseInt(lati);
+                if(isNaN(lati)){
+                    lati = 0;
+                }                
+                lati += 1;
+                localStorage.setItem("latitude" + lati, position.coords.latitude);
+                localStorage.setItem("longitude" + lati, position.coords.longitude);
 
-                var lat = localStorage.latitude;
-                var lon = localStorage.longitude;
+                var lat = localStorage.getItem("latitude" + lati);
+                var lon = localStorage.getItem("longitude" + lati);
+                
                 document.getElementById("lat").innerHTML = lat;
                 document.getElementById("lon").innerHTML = lon;
 
+                localStorage.setItem("dernierNombre", lati);
 
                 var map = new google.maps.Map(document.getElementById('map-holder'), mapOptions);
                 var marker = new google.maps.Marker({
@@ -122,6 +131,7 @@
                 }
             }
         </script>
+
     </div>
     <div id="map-holder"></div>
     <div class="buttons">
@@ -133,6 +143,7 @@
     </div>
     <div id="lon">
     </div>
+
 </body>
 
 </html>
