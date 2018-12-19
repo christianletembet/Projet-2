@@ -23,7 +23,7 @@
             var watchID;
             function getLocation() {
                 //  Vérification si navigateur compatible API geolocalisation
-                if (navigator.geolocation)  // Supported
+                if (navigator.geolocation)  // Supporté
                 {
                     var positionOptions = {
                         timeout: Infinity,
@@ -33,14 +33,14 @@
                     // Pour obtenir la localisation
                     navigator.geolocation.getCurrentPosition(getPosition, catchError, positionOptions);
                 }
-                else  // Si API non supporté
+                else  // Si API non supportée
                 {
-                    alert("Oop! This browser does not support HTML5 Geolocation.");
+                    alert("Oups ! Ce navigateur ne supporte pas la Geolocation HTML5...");
                 }
             }
             function watchLocation() {
                 //  Vérification si navigateur compatible API geolocalisation
-                if (navigator.geolocation)  //Supporté
+                if (navigator.geolocation)  // Supporté
                 {
                     var positionOptions = {
                         timeout: Infinity,
@@ -52,7 +52,7 @@
                 }
                 else  // Non supporté
                 {
-                    alert("Oop! This browser does not support HTML5 Geolocation.");
+                    alert("Oups ! Ce navigateur ne supporte pas la Geolocation HTML5...");
                 }
             }
             function stopWatch() {
@@ -78,7 +78,7 @@
                 var map = new google.maps.Map(document.getElementById('map-holder'), mapOptions);
                 var marker = new google.maps.Marker({
                     position: location,
-                    title: 'Here I am!',
+                    title: 'Vous êtes ici !',
                     map: map,
                     animation: google.maps.Animation.DROP
                 });
