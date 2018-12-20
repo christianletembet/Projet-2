@@ -67,21 +67,43 @@
                         center: location,
                         mapTypeId: google.maps.MapTypeId.ROADMAP
                     };
+
+
                     var lati = localStorage.dernierNombre;
+                    // Passer la variable de chaîne de caractère en entier
                     lati = parseInt(lati);
+                    // Empêcher l'erreur d'affichage "NaN"
                     if (isNaN(lati)) {
                         lati = 0;
                     }
+                    // Ajoute +1 à la variable après chaque requête
                     lati += 1;
+                    // Ajout du dernierNombre pour bien distinguer chaque requête
                     localStorage.setItem("latitude" + lati, position.coords.latitude);
                     localStorage.setItem("longitude" + lati, position.coords.longitude);
 
+                    // Récupération de la localisation + ajout du dernierNombre
                     var lat = localStorage.getItem("latitude" + lati);
                     var lon = localStorage.getItem("longitude" + lati);
 
-                    document.getElementById("lat").innerHTML = lat;
-                    document.getElementById("lon").innerHTML = lon;
+                    // Création d'une nouvelle div à chaque requête pour alimenter l'historique
+                    var newLat = document.createElement("div");
+                    var newLon = document.createElement("div");
+                    
+                    // Ajout du contenu 
+                    var latContent = document.createTextNode(lat);
+                    var lonContent1 = document.createTextNode(lon);
+                    // Ajout du contenu dans la div
+                    newLat.appendChild(latContent);
+                    newLon.appendChild(lonContent1); 
 
+                    // Affichage des données dans la div globale "coordonnees"
+                    var currentDiv = document.getElementById("lat");
+                    currentDiv.appendChild(newLat); 
+                    var secondDiv = document.getElementById("lon");
+                    secondDiv.appendChild(newLon);
+
+                    // Affilition de lati à dernierNombre
                     localStorage.setItem("dernierNombre", lati);
 
                     var map = new google.maps.Map(document.getElementById('map-holder'), mapOptions);
@@ -139,10 +161,12 @@
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button class="button" onclick="stopWatch()">Arrêter la localisation</button>
         </div>
-        <div class="coordonnees">
-            <p class="latitude">Votre <strong>Latitude:</strong></p><div id="lat">
+        <div id="coordonnees">
+            <div id="lat">
+                <h3>Latitude</h3>
             </div>
-            <p class="longitude">Votre <strong>Longitude:</strong></p><div id="lon">
+            <div id="lon">
+                <h3>Longitude</h3>
             </div>
         </div>
     </div>

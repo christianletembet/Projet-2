@@ -104,16 +104,40 @@ body .buttons .button:hover {
   border: 1px solid grey;
 }
 
-html .coordonnees,
-body .coordonnees {
+html #coordonnees,
+body #coordonnees {
   width: 100%;
   height: 10%;
   margin-bottom: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
 }
 
-html .coordonnees p,
-body .coordonnees p {
+html #coordonnees h3,
+body #coordonnees h3 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
   font-family: 'Roboto', sans-serif;
-  font-size: 15px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+html #coordonnees .lat,
+body #coordonnees .lat {
+  width: 100%;
+  height: 100%;
+}
+
+html #coordonnees .lon,
+body #coordonnees .lon {
+  width: 100%;
+  height: 100%;
 }
 /*# sourceMappingURL=style.css.map */

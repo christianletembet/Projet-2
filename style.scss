@@ -69,13 +69,25 @@ body {
             border: 1px solid grey;
         }
     }
-    .coordonnees{
+    #coordonnees{
         width: 100%;
         height: 10%;
         margin-bottom: 20px;
-        p{
+        display: flex;
+        justify-content: space-evenly;
+        h3{
+            display: flex;
+            width: 100%;
             font-family: 'Roboto', sans-serif;
-            font-size: 15px;
+            justify-content: center;
+        }
+        .lat{
+            width: 100%;
+            height: 100%;
+        }
+        .lon{
+            width: 100%;
+            height: 100%;
         }
     }
 }
