@@ -5,7 +5,7 @@
 <head>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="style.css" />
-    <link rel="shortcut icon" type="image/png" href="img/SALUTBG.png"/>
+    <link rel="shortcut icon" type="image/png" href="img/SALUTBG.png" />
 
     <title>Watching on Map</title>
 </head>
@@ -16,134 +16,136 @@
             <a href="#">Netedia</a>
         </nav>
     </div>
-
-    <div class="map">
-        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPyp9z3UwS-dVEjzz9ffarnFOgGCJkJ7k&callback=initMap">
-        </script>
-        <script>
-            var watchID;
-            function getLocation() {
-                //  Vérification si navigateur compatible API geolocalisation
-                if (navigator.geolocation)  // Supporté
-                {
-                    var positionOptions = {
-                        timeout: Infinity,
-                        maximumAge: 0,
-                        enableHighAccuracy: true,
+    <div class="container">
+        <div class="map">
+            <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPyp9z3UwS-dVEjzz9ffarnFOgGCJkJ7k&callback=initMap">
+            </script>
+            <script>
+                var watchID;
+                function getLocation() {
+                    //  Vérification si navigateur compatible API geolocalisation
+                    if (navigator.geolocation)  // Supporté
+                    {
+                        var positionOptions = {
+                            timeout: Infinity,
+                            maximumAge: 0,
+                            enableHighAccuracy: true,
+                        };
+                        // Pour obtenir la localisation
+                        navigator.geolocation.getCurrentPosition(getPosition, catchError, positionOptions);
+                    }
+                    else  // Si API non supportée
+                    {
+                        alert("Oups ! Ce navigateur ne supporte pas la Geolocation HTML5...");
+                    }
+                }
+                function watchLocation() {
+                    //  Vérification si navigateur compatible API geolocalisation
+                    if (navigator.geolocation)  // Supporté
+                    {
+                        var positionOptions = {
+                            timeout: Infinity,
+                            maximumAge: 0,
+                            enableHighAccuracy: true,
+                        };
+                        // Obtenir la localisation à intervals réguliers
+                        watchID = navigator.geolocation.watchPosition(getPosition, catchError, positionOptions);
+                    }
+                    else  // Non supporté
+                    {
+                        alert("Oups ! Ce navigateur ne supporte pas la Geolocation HTML5...");
+                    }
+                }
+                function stopWatch() {
+                    // On stoppe la localisation en continue
+                    navigator.geolocation.clearWatch(watchID);
+                }
+                function getPosition(position) {
+                    var location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                    var mapOptions = {
+                        zoom: 12,
+                        center: location,
+                        mapTypeId: google.maps.MapTypeId.ROADMAP
                     };
-                    // Pour obtenir la localisation
-                    navigator.geolocation.getCurrentPosition(getPosition, catchError, positionOptions);
-                }
-                else  // Si API non supportée
-                {
-                    alert("Oups ! Ce navigateur ne supporte pas la Geolocation HTML5...");
-                }
-            }
-            function watchLocation() {
-                //  Vérification si navigateur compatible API geolocalisation
-                if (navigator.geolocation)  // Supporté
-                {
-                    var positionOptions = {
-                        timeout: Infinity,
-                        maximumAge: 0,
-                        enableHighAccuracy: true,
-                    };
-                    // Obtenir la localisation à intervals réguliers
-                    watchID = navigator.geolocation.watchPosition(getPosition, catchError, positionOptions);
-                }
-                else  // Non supporté
-                {
-                    alert("Oups ! Ce navigateur ne supporte pas la Geolocation HTML5...");
-                }
-            }
-            function stopWatch() {
-                // On stoppe la localisation en continue
-                navigator.geolocation.clearWatch(watchID);
-            }
-            function getPosition(position) {
-                var location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-                var mapOptions = {
-                    zoom: 12,
-                    center: location,
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
-                };
-                var lati = localStorage.dernierNombre;
-                lati = parseInt(lati);
-                if(isNaN(lati)){
-                    lati = 0;
-                }                
-                lati += 1;
-                localStorage.setItem("latitude" + lati, position.coords.latitude);
-                localStorage.setItem("longitude" + lati, position.coords.longitude);
+                    var lati = localStorage.dernierNombre;
+                    lati = parseInt(lati);
+                    if (isNaN(lati)) {
+                        lati = 0;
+                    }
+                    lati += 1;
+                    localStorage.setItem("latitude" + lati, position.coords.latitude);
+                    localStorage.setItem("longitude" + lati, position.coords.longitude);
 
-                var lat = localStorage.getItem("latitude" + lati);
-                var lon = localStorage.getItem("longitude" + lati);
-                
-                document.getElementById("lat").innerHTML = lat;
-                document.getElementById("lon").innerHTML = lon;
+                    var lat = localStorage.getItem("latitude" + lati);
+                    var lon = localStorage.getItem("longitude" + lati);
 
-                localStorage.setItem("dernierNombre", lati);
+                    document.getElementById("lat").innerHTML = lat;
+                    document.getElementById("lon").innerHTML = lon;
 
-                var map = new google.maps.Map(document.getElementById('map-holder'), mapOptions);
-                var marker = new google.maps.Marker({
-                    position: location,
-                    title: 'Vous êtes ici !',
-                    map: map,
-                    animation: google.maps.Animation.DROP
-                });
-                var geocoder = new google.maps.Geocoder();
-                geocoder.geocode({
-                    'latLng': location
-                }, function (results, status) {
-                    if (status == google.maps.GeocoderStatus.OK) {
-                        if (results[1]) {
-                            var options = {
-                                content: results[1].formatted_address,
-                                position: location
-                            };
-                            var popup = new google.maps.InfoWindow(options);
-                            google.maps.event.addListener(marker, 'click', function () {
-                                popup.open(map);
-                            });
+                    localStorage.setItem("dernierNombre", lati);
+
+                    var map = new google.maps.Map(document.getElementById('map-holder'), mapOptions);
+                    var marker = new google.maps.Marker({
+                        position: location,
+                        title: 'Vous êtes ici !',
+                        map: map,
+                        animation: google.maps.Animation.DROP
+                    });
+                    var geocoder = new google.maps.Geocoder();
+                    geocoder.geocode({
+                        'latLng': location
+                    }, function (results, status) {
+                        if (status == google.maps.GeocoderStatus.OK) {
+                            if (results[1]) {
+                                var options = {
+                                    content: results[1].formatted_address,
+                                    position: location
+                                };
+                                var popup = new google.maps.InfoWindow(options);
+                                google.maps.event.addListener(marker, 'click', function () {
+                                    popup.open(map);
+                                });
+                            }
+                            else {
+                                alert('Pas de résultat');
+                            }
                         }
                         else {
-                            alert('Pas de résultat');
+                            alert('Cela ne fonctionne pas en raison: ' + status);
                         }
-                    }
-                    else {
-                        alert('Cela ne fonctionne pas en raison: ' + status);
-                    }
-                });
-            }
-            function catchError(error) {
-                switch (error.code) {
-                    case error.TIMEOUT:
-                        alert("d'un temps d'attente trop long");
-                        break;
-                    case error.POSITION_UNAVAILABLE: f
-                        alert("informations de localisation indisponibles");
-                        break;
-                    case error.PERMISSION_DENIED:
-                        alert("de la non autorisation à partager la localisation");
-                        break;
-                    default:
-                        alert("d'une erreur incconue");
+                    });
                 }
-            }
-        </script>
+                function catchError(error) {
+                    switch (error.code) {
+                        case error.TIMEOUT:
+                            alert("Cela ne fonctionne pas en raison d'un temps d'attente trop long");
+                            break;
+                        case error.POSITION_UNAVAILABLE: f
+                            alert("Cela ne fonctionne pas en raison de: informations de localisation indisponibles");
+                            break;
+                        case error.PERMISSION_DENIED:
+                            alert("Cela ne fonctionne pas car vous n'avez pas autorisé le partage de position");
+                            break;
+                        default:
+                            alert("Cela ne fonctionne pas en raison d'une erreur incconue");
+                    }
+                }
+            </script>
 
+        </div>
+        <div id="map-holder"></div>
+        <div class="buttons">
+            <button class="button" onclick="watchLocation()">Se géolocaliser</button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="button" onclick="stopWatch()">Arrêter la localisation</button>
+        </div>
+        <div class="coordonnees">
+            <p class="latitude">Votre <strong>Latitude:</strong></p><div id="lat">
+            </div>
+            <p class="longitude">Votre <strong>Longitude:</strong></p><div id="lon">
+            </div>
+        </div>
     </div>
-    <div id="map-holder"></div>
-    <div class="buttons">
-        <button onclick="watchLocation()">Se géolocaliser</button>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <button onclick="stopWatch()">Arrêter la localisation</button>
-    </div>
-    <div id="lat">
-    </div>
-    <div id="lon">
-    </div>
-
 </body>
 
 </html>

@@ -3,38 +3,79 @@ body {
     height: 100%;
     margin: 0;
     padding: 0;
-}
-
-.block-nav{
-    width: 100%;
-    height: 40px;
-    .navbar{
+    .container {
+        width: 95%;
+        height: 100%;
+        margin-left: 2.5%;
+        margin-right: 2.5%;
+    }
+    .block-nav {
         width: 100%;
-        height: 100%;
+        height: 40px;
+        .navbar {
+            width: 100%;
+            height: 100%;
+        }
+        a {
+            max-width: 8%;
+            height: 100%;
+            display: flex;
+            text-decoration: none;
+            cursor: pointer;
+            color: black;
+            font-family: 'Roboto', sans-serif;
+            font-size: 1.5em;
+            align-items: center;
+            margin-left: 1%;
+        }
+        background-color: white;
+        border-bottom: solid 1px #191919;
+        box-shadow: 0px 0px 20px;
     }
-    a{
-        max-width: 8%;
-        height: 100%;
+    .map {
+        margin-top: 10px;
+        width: 100%;
+    }
+    #map-holder {
         display: flex;
-        text-decoration: none;
-        cursor: pointer;
-        color: black;
-        font-family: 'Roboto', sans-serif;
-        font-size: 1.5em;
+        height: 80%;
+        width: 100%;
+        margin-bottom: 20px;
+        justify-content: center;
         align-items: center;
-        margin-left: 1%;
+        box-shadow: 0px 0px 30px 0px #656565;
     }
-    background-color: white;
-    border-bottom: solid 1px #191919;
-    box-shadow: 0px 0px 20px;    
-}
-
-.map{
-    margin-top: 10px;
-    width: 100%;
-}
-
-#map-holder {
-    height: 80%;
-    width: 100%;
+    .buttons {
+        display: flex;
+        width: 100%;
+        justify-content: space-around;
+        .button {
+            padding: 10px;
+            border: 0px solid;
+            border-radius: 25px;
+            -webkit-transition: 0.5s;
+            transition: 0.5s;
+            background-color: rgb(231, 230, 230);
+            font-family: 'Roboto', sans-serif;
+            color: black;
+            font-size: 20px;
+            cursor: pointer;
+            outline: none;
+            margin-bottom: 20px;
+        }
+        .button:hover {
+            background-color: #191919;
+            color: white;
+            border: 1px solid grey;
+        }
+    }
+    .coordonnees{
+        width: 100%;
+        height: 10%;
+        margin-bottom: 20px;
+        p{
+            font-family: 'Roboto', sans-serif;
+            font-size: 15px;
+        }
+    }
 }
